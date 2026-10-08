@@ -1,0 +1,3858 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Go Future</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --bg:#f7f7f5;
+    --card:#ffffff;
+    --text:#151719;
+    --muted:#7c8180;
+    --line:#e5e7e4;
+    --green:#079b70;
+    --green-light:#e7f7f1;
+    --dark:#202326;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+button,
+input{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+button:focus,
+input:focus{
+    outline:none;
+}
+
+.screen{
+    display:none;
+    min-height:100vh;
+}
+
+.screen.active{
+    display:block;
+}
+
+/* =========================
+   GENERAL
+========================= */
+
+.app{
+    max-width:1180px;
+    margin:auto;
+    min-height:100vh;
+    padding:0 26px 105px;
+}
+
+.topbar{
+    height:82px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:19px;
+    font-weight:750;
+    letter-spacing:-.6px;
+}
+
+.logo-mark{
+    width:30px;
+    height:30px;
+}
+
+.logo-mark svg{
+    width:100%;
+    height:100%;
+}
+
+.back-button{
+    border:0;
+    background:transparent;
+    color:#555;
+    font-size:20px;
+    padding:8px;
+}
+
+.content{
+    max-width:920px;
+    margin:auto;
+    padding:35px 0;
+}
+
+.eyebrow{
+    text-transform:uppercase;
+    font-size:9px;
+    letter-spacing:3px;
+    color:#666;
+    font-weight:700;
+    margin-bottom:12px;
+}
+
+.page-title{
+    font-size:44px;
+    line-height:1.03;
+    letter-spacing:-2.2px;
+    max-width:700px;
+    margin-bottom:13px;
+}
+
+.page-description{
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.65;
+    max-width:650px;
+    margin-bottom:30px;
+}
+
+/* =========================
+   LANDING
+========================= */
+
+.landing{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(0,155,112,.07),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(0,0,0,.04),
+            transparent 25%
+        ),
+        var(--bg);
+}
+
+.landing-inner{
+    max-width:700px;
+    padding:30px;
+}
+
+.landing-logo{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:14px;
+    margin-bottom:35px;
+}
+
+.landing-logo .logo-mark{
+    width:52px;
+    height:52px;
+}
+
+.landing-logo-text{
+    font-size:42px;
+    font-weight:750;
+    letter-spacing:-2.5px;
+}
+
+.landing-lines{
+    font-size:11px;
+    letter-spacing:5px;
+    color:#89908d;
+    line-height:2.2;
+    margin-bottom:55px;
+}
+
+.loading-line{
+    width:180px;
+    height:1px;
+    background:#d8dcd9;
+    margin:0 auto 18px;
+    position:relative;
+    overflow:hidden;
+}
+
+.loading-line:before{
+    content:"";
+    position:absolute;
+    left:-100px;
+    width:95px;
+    height:1px;
+    background:var(--green);
+    animation:loading 1.4s infinite;
+}
+
+@keyframes loading{
+    0%{
+        left:-100px;
+    }
+
+    100%{
+        left:180px;
+    }
+}
+
+/* =========================
+   WELCOME
+========================= */
+
+.welcome-wrap{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:30px;
+}
+
+.welcome-card{
+    width:100%;
+    max-width:650px;
+    text-align:center;
+}
+
+.welcome-logo{
+    width:64px;
+    height:64px;
+    margin:0 auto 30px;
+}
+
+.welcome-logo svg{
+    width:100%;
+    height:100%;
+}
+
+.welcome-card h1{
+    font-size:48px;
+    letter-spacing:-2.5px;
+    margin-bottom:15px;
+}
+
+.welcome-card p{
+    color:#7d8280;
+    font-size:15px;
+    line-height:1.7;
+    max-width:480px;
+    margin:0 auto 35px;
+}
+
+.primary-button{
+    border:0;
+    background:var(--dark);
+    color:white;
+    border-radius:10px;
+    padding:15px 28px;
+    font-size:13px;
+    font-weight:650;
+    transition:.2s;
+}
+
+.primary-button:hover{
+    transform:translateY(-2px);
+}
+
+/* =========================
+   ONBOARDING
+========================= */
+
+.onboarding{
+    max-width:900px;
+    margin:auto;
+    padding-bottom:80px;
+}
+
+.onboarding-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:40px;
+}
+
+.step-counter{
+    font-size:10px;
+    letter-spacing:2px;
+    color:#888;
+}
+
+.step-progress{
+    width:100%;
+    height:3px;
+    background:#e2e5e2;
+    border-radius:10px;
+    overflow:hidden;
+    margin-bottom:42px;
+}
+
+.step-progress-fill{
+    height:100%;
+    width:20%;
+    background:var(--green);
+    transition:.35s;
+}
+
+.onboarding-title{
+    font-size:45px;
+    line-height:1.03;
+    letter-spacing:-2.3px;
+    max-width:700px;
+    margin-bottom:13px;
+}
+
+.onboarding-description{
+    font-size:14px;
+    color:#7c8180;
+    line-height:1.65;
+    max-width:620px;
+    margin-bottom:30px;
+}
+
+/* PROFILE FORM */
+
+.profile-form{
+    max-width:580px;
+}
+
+.input-group{
+    margin-bottom:16px;
+}
+
+.input-label{
+    display:block;
+    font-size:10px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    color:#666;
+    margin-bottom:8px;
+}
+
+.text-input{
+    width:100%;
+    height:54px;
+    background:white;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:0 16px;
+    font-size:14px;
+    color:var(--text);
+    transition:.2s;
+}
+
+.text-input:focus{
+    border-color:var(--green);
+    box-shadow:0 0 0 3px rgba(7,155,112,.08);
+}
+
+.input-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+/* OPTIONS */
+
+.option-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    margin-bottom:25px;
+}
+
+.option-card{
+    position:relative;
+    min-height:94px;
+    background:white;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:17px;
+    text-align:left;
+    transition:.2s;
+}
+
+.option-card:hover{
+    transform:translateY(-2px);
+    border-color:#c3c9c6;
+}
+
+.option-card.selected{
+    border-color:var(--green);
+    background:#fbfffd;
+}
+
+.option-symbol{
+    font-size:20px;
+    margin-bottom:12px;
+}
+
+.option-name{
+    font-size:12px;
+    font-weight:650;
+}
+
+.option-check{
+    position:absolute;
+    top:13px;
+    right:13px;
+    width:19px;
+    height:19px;
+    border-radius:50%;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    background:var(--green);
+    color:white;
+    font-size:10px;
+}
+
+.option-card.selected .option-check{
+    display:flex;
+}
+
+.onboarding-actions{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-top:25px;
+}
+
+.secondary-button{
+    border:1px solid var(--line);
+    background:white;
+    color:#555;
+    border-radius:9px;
+    padding:13px 20px;
+    font-size:12px;
+}
+
+.continue-button{
+    border:0;
+    background:var(--dark);
+    color:white;
+    border-radius:9px;
+    padding:14px 25px;
+    font-size:12px;
+    font-weight:650;
+}
+
+/* =========================
+   FINISHED
+========================= */
+
+.finished{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:30px;
+}
+
+.finished-card{
+    width:100%;
+    max-width:720px;
+}
+
+.success-circle{
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    background:var(--green);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:25px;
+    margin-bottom:25px;
+}
+
+.finished-card h1{
+    font-size:48px;
+    line-height:1;
+    letter-spacing:-2.5px;
+    margin-bottom:15px;
+}
+
+.finished-card > p{
+    color:#7c8180;
+    font-size:14px;
+    line-height:1.6;
+    margin-bottom:30px;
+}
+
+.result-summary{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+    margin-bottom:25px;
+}
+
+.result-box{
+    background:white;
+    border:1px solid var(--line);
+    border-radius:11px;
+    padding:18px;
+}
+
+.result-box span{
+    display:block;
+    font-size:9px;
+    color:#888;
+    margin-bottom:7px;
+}
+
+.result-box strong{
+    font-size:15px;
+}
+
+/* =========================
+   HOME
+========================= */
+
+.home-content{
+    max-width:950px;
+    margin:auto;
+}
+
+.greeting{
+    margin:18px 0 25px;
+}
+
+.greeting h1{
+    font-size:34px;
+    letter-spacing:-1.5px;
+    margin-bottom:7px;
+}
+
+.greeting p{
+    color:#858987;
+    font-size:13px;
+}
+
+.hero-card{
+    min-height:190px;
+    border-radius:13px;
+    padding:27px;
+    position:relative;
+    overflow:hidden;
+    background:
+        linear-gradient(
+            125deg,
+            #f3f2ef,
+            #d5d5d0
+        );
+    border:1px solid #e2e1de;
+    margin-bottom:28px;
+}
+
+.hero-card:after{
+    content:"";
+    position:absolute;
+    width:300px;
+    height:300px;
+    right:-100px;
+    top:-120px;
+    border:1px solid rgba(0,0,0,.12);
+    transform:rotate(45deg);
+}
+
+.hero-card-content{
+    position:relative;
+    z-index:2;
+}
+
+.hero-card-label{
+    font-size:8px;
+    letter-spacing:3px;
+    color:#737572;
+    margin-bottom:12px;
+}
+
+.hero-card h2{
+    font-size:24px;
+    line-height:1.12;
+    letter-spacing:-1px;
+    margin-bottom:20px;
+}
+
+.round-arrow{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    border:0;
+    background:white;
+    font-size:17px;
+}
+
+.section-title{
+    font-size:17px;
+    letter-spacing:-.4px;
+    margin-bottom:13px;
+}
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:9px;
+    margin-bottom:27px;
+}
+
+.stat-card{
+    background:white;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:16px;
+    min-height:92px;
+}
+
+.stat-icon{
+    font-size:18px;
+    margin-bottom:10px;
+}
+
+.stat-label{
+    font-size:10px;
+    color:#777;
+}
+
+.stat-value{
+    font-size:16px;
+    font-weight:700;
+    margin-top:4px;
+}
+
+.recent-card{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    padding:9px;
+    border:1px solid var(--line);
+    background:white;
+    border-radius:10px;
+    margin-bottom:30px;
+}
+
+.job-info{
+    flex:1;
+}
+
+.job-name{
+    font-size:12px;
+    font-weight:700;
+    margin-bottom:5px;
+}
+
+.job-meta{
+    color:#8a8e8c;
+    font-size:10px;
+}
+
+.job-image{
+    width:60px;
+    height:55px;
+    flex-shrink:0;
+    border-radius:7px;
+    overflow:hidden;
+    position:relative;
+    background:linear-gradient(135deg,#e8e5df,#aaa);
+}
+
+.job-image.laptop:before{
+    content:"";
+    position:absolute;
+    width:37px;
+    height:24px;
+    background:#282b2d;
+    left:11px;
+    top:9px;
+    border-radius:2px;
+}
+
+.quote-card{
+    background:white;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:27px;
+}
+
+.quote-card p{
+    font-size:14px;
+    line-height:1.55;
+}
+
+/* =========================
+   CAREERS
+========================= */
+
+.career-list{
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+}
+
+.career-row{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    background:white;
+    border:1px solid var(--line);
+    border-radius:11px;
+    padding:8px;
+    transition:.2s;
+}
+
+.career-row:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 25px rgba(0,0,0,.04);
+}
+
+.career-row .job-image{
+    width:72px;
+    height:61px;
+}
+
+.career-content{
+    flex:1;
+}
+
+.career-content h3{
+    font-size:13px;
+    margin-bottom:5px;
+}
+
+.career-content p{
+    font-size:10px;
+    color:#858987;
+    margin-bottom:7px;
+}
+
+.match-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    font-size:9px;
+    color:#287c67;
+    background:#eff9f5;
+    border-radius:20px;
+    padding:4px 7px;
+}
+
+.match-dot{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--green);
+}
+
+.career-arrow{
+    border:0;
+    background:transparent;
+    color:#444;
+    font-size:21px;
+    padding:12px;
+}
+
+/* =========================
+   DETAIL
+========================= */
+
+.detail-card{
+    background:white;
+    border:1px solid var(--line);
+    border-radius:13px;
+    overflow:hidden;
+}
+
+.detail-image{
+    height:190px;
+    position:relative;
+    background:linear-gradient(135deg,#e7e4de,#c6c5c0);
+}
+
+.large-laptop{
+    position:absolute;
+    width:220px;
+    height:135px;
+    background:#25282a;
+    border-radius:7px;
+    left:50%;
+    top:25px;
+    transform:translateX(-50%) rotate(-2deg);
+}
+
+.detail-content{
+    padding:25px;
+}
+
+.detail-content h2{
+    font-size:29px;
+    letter-spacing:-1.2px;
+    margin-bottom:6px;
+}
+
+.tags{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+    margin-bottom:22px;
+}
+
+.tag{
+    padding:5px 8px;
+    border-radius:20px;
+    background:#f0f1ef;
+    color:#666;
+    font-size:9px;
+}
+
+.detail-section{
+    border-top:1px solid #eee;
+    padding:18px 0;
+}
+
+.detail-section h3{
+    font-size:13px;
+    margin-bottom:7px;
+}
+
+.detail-section p{
+    color:#777;
+    font-size:12px;
+    line-height:1.6;
+}
+
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:8px;
+}
+
+.info-box{
+    border:1px solid #eceeeb;
+    border-radius:9px;
+    padding:13px;
+}
+
+.info-box span{
+    font-size:9px;
+    color:#888;
+}
+
+.info-box strong{
+    display:block;
+    font-size:11px;
+    margin-top:5px;
+}
+
+.save-button{
+    width:100%;
+    height:45px;
+    border:0;
+    border-radius:8px;
+    background:var(--dark);
+    color:white;
+    font-size:12px;
+    font-weight:650;
+}
+
+/* =========================
+   PLAN
+========================= */
+
+.plan-list{
+    position:relative;
+    margin-top:35px;
+}
+
+.plan-item{
+    display:flex;
+    gap:15px;
+    margin-bottom:10px;
+}
+
+.plan-number{
+    width:35px;
+    height:35px;
+    flex-shrink:0;
+    border-radius:50%;
+    background:#e0e3e0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+}
+
+.plan-item.done .plan-number{
+    background:var(--green);
+    color:white;
+}
+
+.plan-box{
+    flex:1;
+    background:white;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:13px 15px;
+}
+
+.plan-box strong{
+    display:block;
+    font-size:12px;
+    margin-bottom:5px;
+}
+
+.plan-box span{
+    color:#929693;
+    font-size:10px;
+}
+
+/* =========================
+   PROFILE
+========================= */
+
+.profile-card{
+    background:white;
+    border:1px solid var(--line);
+    border-radius:13px;
+    padding:25px;
+}
+
+.profile-head{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin-bottom:28px;
+}
+
+.profile-big{
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    background:linear-gradient(145deg,#d3d0c6,#8e8c85);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-weight:700;
+}
+
+.profile-head h2{
+    font-size:18px;
+}
+
+.profile-head p{
+    color:#888;
+    font-size:10px;
+    margin-top:4px;
+}
+
+.strength{
+    margin-bottom:18px;
+}
+
+.strength-top{
+    display:flex;
+    justify-content:space-between;
+    font-size:11px;
+    margin-bottom:8px;
+}
+
+.strength-top span:last-child{
+    color:#888;
+}
+
+.strength-bar{
+    width:100%;
+    height:3px;
+    background:#ddd;
+    border-radius:5px;
+}
+
+.strength-fill{
+    height:100%;
+    background:var(--green);
+    border-radius:5px;
+}
+
+/* =========================
+   SAVED EMPTY
+========================= */
+
+.empty-saved{
+    background:white;
+    border:1px solid var(--line);
+    border-radius:13px;
+    padding:40px 20px;
+    text-align:center;
+}
+
+.empty-saved-icon{
+    font-size:36px;
+    margin-bottom:15px;
+}
+
+.small-button{
+    border:0;
+    background:var(--dark);
+    color:white;
+    border-radius:7px;
+    padding:10px 18px;
+    font-size:11px;
+    margin-top:18px;
+}
+
+/* =========================
+   SETTINGS
+========================= */
+
+.danger-button{
+    width:100%;
+    height:46px;
+    border:1px solid #ead6d6;
+    background:#fffafa;
+    color:#b34b4b;
+    border-radius:9px;
+    font-size:12px;
+    font-weight:600;
+    margin-top:20px;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:min(680px,calc(100% - 28px));
+    height:68px;
+    background:rgba(255,255,255,.96);
+    border:1px solid #e1e3e0;
+    border-radius:17px 17px 0 0;
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+    z-index:50;
+    box-shadow:0 -5px 30px rgba(0,0,0,.04);
+    backdrop-filter:blur(15px);
+}
+
+.nav-item{
+    border:0;
+    background:transparent;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:5px;
+    color:#8a8e8c;
+    font-size:9px;
+    min-width:65px;
+}
+
+.nav-icon{
+    font-size:17px;
+}
+
+.nav-item.active{
+    color:var(--green);
+    font-weight:700;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:650px){
+
+    .app{
+        padding-left:18px;
+        padding-right:18px;
+    }
+
+    .page-title,
+    .onboarding-title{
+        font-size:35px;
+    }
+
+    .landing-logo-text{
+        font-size:34px;
+    }
+
+    .option-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .result-summary{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:430px){
+
+    .option-grid{
+        grid-template-columns:1fr 1fr;
+        gap:7px;
+    }
+
+    .option-card{
+        min-height:90px;
+        padding:13px;
+    }
+
+    .option-name{
+        font-size:10px;
+    }
+
+    .onboarding-title{
+        font-size:31px;
+    }
+
+    .welcome-card h1,
+    .finished-card h1{
+        font-size:38px;
+    }
+
+    .input-row{
+        grid-template-columns:1fr;
+    }
+
+    .onboarding-actions{
+        flex-direction:column-reverse;
+        align-items:stretch;
+    }
+
+    .continue-button,
+    .secondary-button{
+        width:100%;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+
+<!-- =====================================================
+     LANDING
+===================================================== -->
+
+<section id="landing" class="screen active">
+
+    <div class="landing">
+
+        <div class="landing-inner">
+
+            <div class="landing-logo">
+
+                <div class="logo-mark">
+
+                    <svg viewBox="0 0 60 60" fill="none">
+
+                        <path
+                            d="M8 46L52 8L37 48L29 29L8 46Z"
+                            stroke="#151719"
+                            stroke-width="2.7"
+                            stroke-linejoin="round"
+                        />
+
+                        <path
+                            d="M29 29L52 8"
+                            stroke="#079b70"
+                            stroke-width="2.7"
+                        />
+
+                    </svg>
+
+                </div>
+
+                <div class="landing-logo-text">
+                    Go Future
+                </div>
+
+            </div>
+
+
+            <div class="landing-lines">
+                DEINE INTERESSEN.<br>
+                DEINE STÄRKEN.<br>
+                DEINE ZUKUNFT.
+            </div>
+
+
+            <div class="loading-line"></div>
+
+            <small>
+                Wird geladen ...
+            </small>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     WELCOME
+===================================================== -->
+
+<section id="welcome" class="screen">
+
+    <div class="welcome-wrap">
+
+        <div class="welcome-card">
+
+            <div class="welcome-logo">
+
+                <svg viewBox="0 0 60 60" fill="none">
+
+                    <path
+                        d="M8 46L52 8L37 48L29 29L8 46Z"
+                        stroke="#151719"
+                        stroke-width="2.7"
+                    />
+
+                    <path
+                        d="M29 29L52 8"
+                        stroke="#079b70"
+                        stroke-width="2.7"
+                    />
+
+                </svg>
+
+            </div>
+
+
+            <div class="eyebrow">
+                WILLKOMMEN BEI
+            </div>
+
+
+            <h1>
+                Go Future
+            </h1>
+
+
+            <p>
+                Finde heraus, welche Berufe wirklich zu dir,
+                deinen Interessen und deinen Stärken passen.
+            </p>
+
+
+            <button class="primary-button"
+                    onclick="startOnboarding()">
+
+                Profil erstellen&nbsp; →
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     ONBOARDING
+===================================================== -->
+
+<section id="onboarding" class="screen">
+
+    <div class="app">
+
+        <div class="onboarding">
+
+            <div class="onboarding-top">
+
+                <button class="back-button"
+                        onclick="previousOnboarding()">
+                    ←
+                </button>
+
+                <div class="step-counter"
+                     id="stepCounter">
+                    01 / 05
+                </div>
+
+            </div>
+
+
+            <div class="step-progress">
+
+                <div id="stepProgressFill"
+                     class="step-progress-fill">
+                </div>
+
+            </div>
+
+
+            <div id="onboardingContent"></div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FINISHED
+===================================================== -->
+
+<section id="finished" class="screen">
+
+    <div class="finished">
+
+        <div class="finished-card">
+
+            <div class="success-circle">
+                ✓
+            </div>
+
+            <div class="eyebrow">
+                DEIN PROFIL IST BEREIT
+            </div>
+
+            <h1 id="finishedTitle">
+                Willkommen bei Go Future.
+            </h1>
+
+            <p>
+                Wir haben dein Profil erstellt und erste
+                Berufsfelder für dich gefunden.
+            </p>
+
+
+            <div class="result-summary">
+
+                <div class="result-box">
+
+                    <span>
+                        INTERESSEN
+                    </span>
+
+                    <strong id="resultInterests">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="result-box">
+
+                    <span>
+                        STÄRKEN
+                    </span>
+
+                    <strong id="resultStrengths">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="result-box">
+
+                    <span>
+                        FÄCHER
+                    </span>
+
+                    <strong id="resultSubjects">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <button class="primary-button"
+                    onclick="finishOnboarding()">
+
+                Meine Zukunft entdecken&nbsp; →
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     HOME
+===================================================== -->
+
+<section id="home" class="screen">
+
+    <div class="app">
+
+        <header class="topbar">
+
+            <div class="logo">
+
+                <div class="logo-mark">
+
+                    <svg viewBox="0 0 60 60" fill="none">
+
+                        <path
+                            d="M8 46L52 8L37 48L29 29L8 46Z"
+                            stroke="#151719"
+                            stroke-width="2.7"
+                        />
+
+                        <path
+                            d="M29 29L52 8"
+                            stroke="#079b70"
+                            stroke-width="2.7"
+                        />
+
+                    </svg>
+
+                </div>
+
+                Go Future
+
+            </div>
+
+
+            <div class="avatar"
+                 id="homeAvatar">
+                T
+            </div>
+
+        </header>
+
+
+        <div class="home-content">
+
+            <div class="greeting">
+
+                <h1 id="homeGreeting">
+                    Hallo
+                </h1>
+
+                <p>
+                    Schön, dass du wieder da bist.
+                </p>
+
+            </div>
+
+
+            <div class="hero-card">
+
+                <div class="hero-card-content">
+
+                    <div class="hero-card-label">
+                        DEIN NÄCHSTER SCHRITT
+                    </div>
+
+                    <h2>
+                        Entdecke Berufe,<br>
+                        die zu dir passen.
+                    </h2>
+
+                    <button class="round-arrow"
+                            onclick="showScreen('careers')">
+
+                        →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <h2 class="section-title">
+                Deine Übersicht
+            </h2>
+
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        ⌘
+                    </div>
+
+                    <div class="stat-label">
+                        Interessenfelder
+                    </div>
+
+                    <div class="stat-value"
+                         id="homeInterests">
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        ◇
+                    </div>
+
+                    <div class="stat-label">
+                        Berufsvorschläge
+                    </div>
+
+                    <div class="stat-value">
+                        6
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        ✧
+                    </div>
+
+                    <div class="stat-label">
+                        Stärken
+                    </div>
+
+                    <div class="stat-value"
+                         id="homeStrengths">
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        □
+                    </div>
+
+                    <div class="stat-label">
+                        Profil
+                    </div>
+
+                    <div class="stat-value">
+                        Bereit
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <h2 class="section-title">
+                Zuletzt angesehen
+            </h2>
+
+
+            <div class="recent-card">
+
+                <div class="job-image laptop"></div>
+
+                <div class="job-info">
+
+                    <div class="job-name">
+                        Softwareentwickler
+                    </div>
+
+                    <div class="job-meta">
+                        Technik · IT · Kreativität
+                    </div>
+
+                </div>
+
+                <div>
+                    ›
+                </div>
+
+            </div>
+
+
+            <div class="quote-card">
+
+                <p>
+                    Nicht der beste Weg ist der einfachste,
+                    sondern der, der zu dir passt.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CAREERS
+===================================================== -->
+
+<section id="careers" class="screen">
+
+    <div class="app">
+
+        <header class="topbar">
+
+            <button class="back-button"
+                    onclick="showScreen('home')">
+                ←
+            </button>
+
+            <div class="logo">
+                Go Future
+            </div>
+
+            <div></div>
+
+        </header>
+
+
+        <div class="content">
+
+            <div class="eyebrow">
+                BERUFSVORSCHLÄGE
+            </div>
+
+            <h1 class="page-title">
+                Diese Berufe passen zu dir
+            </h1>
+
+            <p class="page-description">
+                Basierend auf deinem Profil haben wir
+                diese Berufe für dich ausgewählt.
+            </p>
+
+
+            <div id="careerList"
+                 class="career-list">
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     DETAILS
+===================================================== -->
+
+<section id="details" class="screen">
+
+    <div class="app">
+
+        <header class="topbar">
+
+            <button class="back-button"
+                    onclick="showScreen('careers')">
+                ←
+            </button>
+
+            <div class="logo">
+                Go Future
+            </div>
+
+            <div></div>
+
+        </header>
+
+
+        <div class="content">
+
+            <div id="detailsCard"></div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SAVED
+===================================================== -->
+
+<section id="saved" class="screen">
+
+    <div class="app">
+
+        <header class="topbar">
+
+            <button class="back-button"
+                    onclick="showScreen('home')">
+                ←
+            </button>
+
+            <div class="logo">
+                Go Future
+            </div>
+
+            <div></div>
+
+        </header>
+
+
+        <div class="content">
+
+            <div class="eyebrow">
+                DEINE AUSWAHL
+            </div>
+
+            <h1 class="page-title">
+                Gespeicherte Berufe
+            </h1>
+
+            <p class="page-description">
+                Deine gespeicherten Berufe.
+            </p>
+
+
+            <div id="savedCareers"
+                 class="career-list">
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PLAN
+===================================================== -->
+
+<section id="plan" class="screen">
+
+    <div class="app">
+
+        <header class="topbar">
+
+            <button class="back-button"
+                    onclick="showScreen('home')">
+                ←
+            </button>
+
+            <div class="logo">
+                Go Future
+            </div>
+
+            <div></div>
+
+        </header>
+
+
+        <div class="content">
+
+            <div class="eyebrow">
+                DEIN WEG
+            </div>
+
+            <h1 class="page-title">
+                Dein Plan
+            </h1>
+
+            <p class="page-description">
+                In 3 Schritten zu deiner Zukunft.
+            </p>
+
+
+            <div class="plan-list">
+
+                <div class="plan-item done">
+
+                    <div class="plan-number">
+                        1
+                    </div>
+
+                    <div class="plan-box">
+
+                        <strong>
+                            Interessen & Stärken
+                        </strong>
+
+                        <span>
+                            Abgeschlossen ✓
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="plan-item done">
+
+                    <div class="plan-number">
+                        2
+                    </div>
+
+                    <div class="plan-box">
+
+                        <strong>
+                            Berufsvorschläge
+                        </strong>
+
+                        <span>
+                            Abgeschlossen ✓
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="plan-item">
+
+                    <div class="plan-number">
+                        3
+                    </div>
+
+                    <div class="plan-box">
+
+                        <strong>
+                            Dein individueller Plan
+                        </strong>
+
+                        <span>
+                            In Arbeit
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PROFILE
+===================================================== -->
+
+<section id="profile" class="screen">
+
+    <div class="app">
+
+        <header class="topbar">
+
+            <button class="back-button"
+                    onclick="showScreen('home')">
+                ←
+            </button>
+
+            <div class="logo">
+                Go Future
+            </div>
+
+            <div></div>
+
+        </header>
+
+
+        <div class="content">
+
+            <div class="profile-card">
+
+                <div class="profile-head">
+
+                    <div class="profile-big"
+                         id="profileAvatar">
+                        T
+                    </div>
+
+                    <div>
+
+                        <h2 id="profileName">
+                            Toni
+                        </h2>
+
+                        <p>
+                            Dein Go Future Profil
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="eyebrow">
+                    DEINE INTERESSEN
+                </div>
+
+                <div id="profileInterests"
+                     style="
+                        display:flex;
+                        gap:7px;
+                        flex-wrap:wrap;
+                        margin-bottom:28px;
+                     ">
+                </div>
+
+
+                <div class="eyebrow">
+                    DEINE STÄRKEN
+                </div>
+
+                <p class="page-description">
+                    Deine ausgewählten Stärken.
+                </p>
+
+
+                <div id="profileStrengthList"></div>
+
+
+                <button class="danger-button"
+                        onclick="resetApp()">
+
+                    App komplett zurücksetzen
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+/* =====================================================
+   DATEN
+===================================================== */
+
+const questions = [
+
+    {
+        title:"Was interessiert dich besonders?",
+        description:"Wähle mehrere Bereiche aus, die dich ansprechen.",
+        category:"DEINE INTERESSEN",
+        options:[
+            "Technik & IT",
+            "Natur & Umwelt",
+            "Kreativität & Design",
+            "Wirtschaft & Finanzen",
+            "Gesundheit & Medizin",
+            "Soziales & Pädagogik",
+            "Sport & Bewegung",
+            "Sprachen & Kommunikation"
+        ]
+    },
+
+    {
+        title:"Was sind deine Stärken?",
+        description:"Wähle die Fähigkeiten aus, die dich am besten beschreiben.",
+        category:"DEINE STÄRKEN",
+        options:[
+            "Logisches Denken",
+            "Kreativität",
+            "Teamarbeit",
+            "Organisation",
+            "Analyse",
+            "Kommunikation",
+            "Technisches Denken",
+            "Menschen helfen"
+        ]
+    },
+
+    {
+        title:"Welche Fächer liegen dir?",
+        description:"Wähle die Schulfächer aus, die dir besonders gut liegen.",
+        category:"SCHULE",
+        options:[
+            "Mathematik",
+            "Informatik",
+            "Physik",
+            "Biologie",
+            "Chemie",
+            "Deutsch",
+            "Englisch",
+            "Kunst"
+        ]
+    }
+
+];
+
+
+const careers = [
+
+    {
+        name:"Softwareentwickler",
+        categories:"Technik · IT · Kreativität",
+        interests:["Technik & IT"],
+        strengths:[
+            "Logisches Denken",
+            "Analyse",
+            "Technisches Denken"
+        ],
+        subjects:[
+            "Mathematik",
+            "Informatik"
+        ],
+        reason:"Technik, Computer und logisches Denken passen sehr gut zu diesem Beruf.",
+        tasks:"Als Softwareentwickler planst, programmierst, testest und verbesserst du Software.",
+        education:"Ausbildung zum Fachinformatiker oder Studium der Informatik.",
+        salary:"45.000 – 70.000 €",
+        workplace:"Büro / Remote",
+        image:"laptop"
+    },
+
+    {
+        name:"Wirtschaftsprüfer",
+        categories:"Finanzen · Organisation · Analyse",
+        interests:["Wirtschaft & Finanzen"],
+        strengths:[
+            "Analyse",
+            "Organisation",
+            "Logisches Denken"
+        ],
+        subjects:["Mathematik"],
+        reason:"Analytisches Denken und Interesse an Wirtschaft sind hier besonders hilfreich.",
+        tasks:"Finanzdaten analysieren, Unternehmen prüfen und wirtschaftliche Zusammenhänge bewerten.",
+        education:"Studium im Bereich Wirtschaftswissenschaften.",
+        salary:"55.000 – 90.000 €",
+        workplace:"Büro",
+        image:"office"
+    },
+
+    {
+        name:"Arzt",
+        categories:"Medizin · Verantwortung · Soziales",
+        interests:["Gesundheit & Medizin"],
+        strengths:[
+            "Menschen helfen",
+            "Analyse",
+            "Kommunikation"
+        ],
+        subjects:[
+            "Biologie",
+            "Chemie"
+        ],
+        reason:"Interesse an Medizin, Wissenschaft und Menschen passt zu diesem Beruf.",
+        tasks:"Patienten untersuchen, Diagnosen stellen und Behandlungen planen.",
+        education:"Medizinstudium und anschließende Weiterbildung.",
+        salary:"60.000 – 100.000 €+",
+        workplace:"Praxis / Klinik",
+        image:"medical"
+    },
+
+    {
+        name:"Umweltingenieur",
+        categories:"Natur · Technik · Nachhaltigkeit",
+        interests:[
+            "Natur & Umwelt",
+            "Technik & IT"
+        ],
+        strengths:[
+            "Analyse",
+            "Logisches Denken",
+            "Technisches Denken"
+        ],
+        subjects:[
+            "Physik",
+            "Mathematik",
+            "Biologie"
+        ],
+        reason:"Technik und Interesse an Umwelt können hier miteinander verbunden werden.",
+        tasks:"Nachhaltige Systeme planen und technische Umweltprobleme lösen.",
+        education:"Studium im Bereich Umwelttechnik oder Ingenieurwesen.",
+        salary:"45.000 – 70.000 €",
+        workplace:"Büro / Labor",
+        image:"nature"
+    },
+
+    {
+        name:"Designer",
+        categories:"Design · Kreativität · Medien",
+        interests:["Kreativität & Design"],
+        strengths:[
+            "Kreativität",
+            "Kommunikation"
+        ],
+        subjects:[
+            "Kunst",
+            "Informatik"
+        ],
+        reason:"Kreativität und Design stehen bei diesem Beruf im Mittelpunkt.",
+        tasks:"Grafiken, Interfaces, Marken und visuelle Konzepte entwickeln.",
+        education:"Designstudium, Ausbildung oder Einstieg über ein Portfolio.",
+        salary:"35.000 – 60.000 €",
+        workplace:"Studio / Remote",
+        image:"design"
+    },
+
+    {
+        name:"Mediengestalter",
+        categories:"Medien · Design · Kreativität",
+        interests:[
+            "Kreativität & Design",
+            "Sprachen & Kommunikation"
+        ],
+        strengths:[
+            "Kreativität",
+            "Kommunikation",
+            "Organisation"
+        ],
+        subjects:[
+            "Kunst",
+            "Deutsch"
+        ],
+        reason:"Der Beruf verbindet kreative Ideen mit digitalen Medien.",
+        tasks:"Videos, Grafiken, Webseiten und andere Medien gestalten.",
+        education:"Ausbildung zum Mediengestalter.",
+        salary:"32.000 – 52.000 €",
+        workplace:"Agentur / Studio",
+        image:"design"
+    }
+
+];
+
+
+/* =====================================================
+   STATE
+===================================================== */
+
+let onboardingStep = 0;
+
+let profileData = {
+
+    name:"",
+    age:"",
+    school:"",
+    interests:[],
+    strengths:[],
+    subjects:[]
+
+};
+
+
+/* =====================================================
+   STORAGE
+===================================================== */
+
+function loadProfile(){
+
+    const saved =
+        localStorage.getItem("goFutureProfile");
+
+    if(saved){
+
+        try{
+
+            profileData =
+                JSON.parse(saved);
+
+            return true;
+
+        }catch(error){
+
+            return false;
+
+        }
+
+    }
+
+    return false;
+
+}
+
+
+function saveProfile(){
+
+    localStorage.setItem(
+        "goFutureProfile",
+        JSON.stringify(profileData)
+    );
+
+}
+
+
+function isFirstStart(){
+
+    return !localStorage.getItem(
+        "goFutureStarted"
+    );
+
+}
+
+
+/* =====================================================
+   SCREEN
+===================================================== */
+
+function showScreen(id){
+
+    document
+        .querySelectorAll(".screen")
+        .forEach(screen=>{
+            screen.classList.remove("active");
+        });
+
+
+    const target =
+        document.getElementById(id);
+
+
+    if(target){
+        target.classList.add("active");
+    }
+
+
+    updateNavigation(id);
+
+    window.scrollTo(0,0);
+
+}
+
+
+/* =====================================================
+   ONBOARDING START
+===================================================== */
+
+function startOnboarding(){
+
+    onboardingStep = 0;
+
+    profileData = {
+        name:"",
+        age:"",
+        school:"",
+        interests:[],
+        strengths:[],
+        subjects:[]
+    };
+
+    renderOnboarding();
+
+    showScreen("onboarding");
+
+}
+
+
+/* =====================================================
+   ONBOARDING RENDER
+===================================================== */
+
+function renderOnboarding(){
+
+    const container =
+        document.getElementById(
+            "onboardingContent"
+        );
+
+
+    const counter =
+        document.getElementById(
+            "stepCounter"
+        );
+
+
+    const progress =
+        document.getElementById(
+            "stepProgressFill"
+        );
+
+
+    counter.textContent =
+        String(onboardingStep + 1).padStart(2,"0")
+        + " / 05";
+
+
+    progress.style.width =
+        ((onboardingStep + 1) / 5 * 100)
+        + "%";
+
+
+    /* STEP 1 */
+
+    if(onboardingStep === 0){
+
+        container.innerHTML = `
+
+            <div class="eyebrow">
+                DEIN PROFIL
+            </div>
+
+            <h1 class="onboarding-title">
+                Erstmal: Wer bist du?
+            </h1>
+
+            <p class="onboarding-description">
+                Erstelle dein persönliches Go Future Profil.
+                Du kannst die Angaben später jederzeit ändern.
+            </p>
+
+
+            <div class="profile-form">
+
+                <div class="input-group">
+
+                    <label class="input-label">
+                        Dein Name
+                    </label>
+
+                    <input
+                        id="profileNameInput"
+                        class="text-input"
+                        type="text"
+                        placeholder="z. B. Toni"
+                        value="${profileData.name}"
+                    >
+
+                </div>
+
+
+                <div class="input-row">
+
+                    <div class="input-group">
+
+                        <label class="input-label">
+                            Alter
+                        </label>
+
+                        <input
+                            id="profileAgeInput"
+                            class="text-input"
+                            type="number"
+                            placeholder="z. B. 15"
+                            value="${profileData.age}"
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label class="input-label">
+                            Klasse
+                        </label>
+
+                        <input
+                            id="profileSchoolInput"
+                            class="text-input"
+                            type="text"
+                            placeholder="z. B. 9b"
+                            value="${profileData.school}"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="onboarding-actions">
+
+                    <div></div>
+
+                    <button
+                        class="continue-button"
+                        onclick="nextOnboarding()">
+
+                        Weiter →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    /* STEPS 2-4 */
+
+    const questionIndex =
+        onboardingStep - 1;
+
+    const question =
+        questions[questionIndex];
+
+
+    let selected = [];
+
+
+    if(questionIndex === 0){
+        selected = profileData.interests;
+    }
+
+    if(questionIndex === 1){
+        selected = profileData.strengths;
+    }
+
+    if(questionIndex === 2){
+        selected = profileData.subjects;
+    }
+
+
+    container.innerHTML = `
+
+        <div class="eyebrow">
+            ${question.category}
+        </div>
+
+        <h1 class="onboarding-title">
+            ${question.title}
+        </h1>
+
+        <p class="onboarding-description">
+            ${question.description}
+        </p>
+
+
+        <div id="onboardingOptions"
+             class="option-grid">
+        </div>
+
+
+        <div class="onboarding-actions">
+
+            <button
+                class="secondary-button"
+                onclick="previousOnboarding()">
+
+                ← Zurück
+
+            </button>
+
+
+            <button
+                class="continue-button"
+                onclick="nextOnboarding()">
+
+                ${onboardingStep === 3
+                    ? "Profil erstellen →"
+                    : "Weiter →"}
+
+            </button>
+
+        </div>
+
+    `;
+
+
+    const optionContainer =
+        document.getElementById(
+            "onboardingOptions"
+        );
+
+
+    question.options.forEach(
+        (option,index)=>{
+
+            const card =
+                document.createElement("button");
+
+
+            card.className =
+                "option-card";
+
+
+            if(selected.includes(option)){
+                card.classList.add("selected");
+            }
+
+
+            card.innerHTML = `
+
+                <div class="option-symbol">
+                    ${getOptionIcon(index)}
+                </div>
+
+                <div class="option-name">
+                    ${option}
+                </div>
+
+                <div class="option-check">
+                    ✓
+                </div>
+
+            `;
+
+
+            card.onclick = ()=>{
+
+                if(selected.includes(option)){
+
+                    selected =
+                        selected.filter(
+                            x => x !== option
+                        );
+
+                    card.classList.remove(
+                        "selected"
+                    );
+
+                }else{
+
+                    selected.push(option);
+
+                    card.classList.add(
+                        "selected"
+                    );
+
+                }
+
+            };
+
+
+            optionContainer.appendChild(card);
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   ONBOARDING WEITER
+===================================================== */
+
+function nextOnboarding(){
+
+    /* PROFILE */
+
+    if(onboardingStep === 0){
+
+        const name =
+            document
+            .getElementById("profileNameInput")
+            .value
+            .trim();
+
+
+        const age =
+            document
+            .getElementById("profileAgeInput")
+            .value
+            .trim();
+
+
+        const school =
+            document
+            .getElementById("profileSchoolInput")
+            .value
+            .trim();
+
+
+        if(!name){
+
+            alert(
+                "Gib bitte deinen Namen ein."
+            );
+
+            return;
+
+        }
+
+
+        profileData.name = name;
+        profileData.age = age;
+        profileData.school = school;
+
+    }
+
+
+    /* INTERESTS */
+
+    if(onboardingStep === 1){
+
+        if(profileData.interests.length === 0){
+
+            alert(
+                "Wähle bitte mindestens ein Interesse aus."
+            );
+
+            return;
+
+        }
+
+    }
+
+
+    /* STRENGTHS */
+
+    if(onboardingStep === 2){
+
+        if(profileData.strengths.length === 0){
+
+            alert(
+                "Wähle bitte mindestens eine Stärke aus."
+            );
+
+            return;
+
+        }
+
+    }
+
+
+    /* SUBJECTS */
+
+    if(onboardingStep === 3){
+
+        if(profileData.subjects.length === 0){
+
+            alert(
+                "Wähle bitte mindestens ein Fach aus."
+            );
+
+            return;
+
+        }
+
+
+        saveProfile();
+
+        localStorage.setItem(
+            "goFutureStarted",
+            "true"
+        );
+
+
+        prepareFinishedScreen();
+
+        showScreen("finished");
+
+        return;
+
+    }
+
+
+    onboardingStep++;
+
+    renderOnboarding();
+
+}
+
+
+/* =====================================================
+   ZURÜCK
+===================================================== */
+
+function previousOnboarding(){
+
+    if(onboardingStep === 0){
+
+        showScreen("welcome");
+
+        return;
+
+    }
+
+
+    onboardingStep--;
+
+    renderOnboarding();
+
+}
+
+
+/* =====================================================
+   ICONS
+===================================================== */
+
+function getOptionIcon(index){
+
+    const icons = [
+        "▣",
+        "♧",
+        "◉",
+        "▥",
+        "♡",
+        "♙",
+        "⌁",
+        "○"
+    ];
+
+    return icons[index] || "◇";
+
+}
+
+
+/* =====================================================
+   FINISHED SCREEN
+===================================================== */
+
+function prepareFinishedScreen(){
+
+    const name =
+        profileData.name || "dir";
+
+
+    document.getElementById(
+        "finishedTitle"
+    ).textContent =
+        `Willkommen, ${name}.`;
+
+
+    document.getElementById(
+        "resultInterests"
+    ).textContent =
+        profileData.interests.length;
+
+
+    document.getElementById(
+        "resultStrengths"
+    ).textContent =
+        profileData.strengths.length;
+
+
+    document.getElementById(
+        "resultSubjects"
+    ).textContent =
+        profileData.subjects.length;
+
+}
+
+
+/* =====================================================
+   ONBOARDING ABSCHLIESSEN
+===================================================== */
+
+function finishOnboarding(){
+
+    updateHome();
+
+    calculateResults();
+
+    updateProfile();
+
+    showScreen("home");
+
+}
+
+
+/* =====================================================
+   HOME AKTUALISIEREN
+===================================================== */
+
+function updateHome(){
+
+    const name =
+        profileData.name || "Toni";
+
+
+    document.getElementById(
+        "homeGreeting"
+    ).textContent =
+        `Hallo, ${name}`;
+
+
+    document.getElementById(
+        "homeAvatar"
+    ).textContent =
+        name.charAt(0).toUpperCase();
+
+
+    document.getElementById(
+        "homeInterests"
+    ).textContent =
+        profileData.interests.length;
+
+
+    document.getElementById(
+        "homeStrengths"
+    ).textContent =
+        profileData.strengths.length;
+
+}
+
+
+/* =====================================================
+   PROFIL AKTUALISIEREN
+===================================================== */
+
+function updateProfile(){
+
+    const name =
+        profileData.name || "Toni";
+
+
+    document.getElementById(
+        "profileName"
+    ).textContent =
+        name;
+
+
+    document.getElementById(
+        "profileAvatar"
+    ).textContent =
+        name.charAt(0).toUpperCase();
+
+
+    const interests =
+        document.getElementById(
+            "profileInterests"
+        );
+
+
+    interests.innerHTML = "";
+
+
+    profileData.interests.forEach(item=>{
+
+        const tag =
+            document.createElement("div");
+
+        tag.className = "tag";
+
+        tag.textContent = item;
+
+        interests.appendChild(tag);
+
+    });
+
+
+    const strengthList =
+        document.getElementById(
+            "profileStrengthList"
+        );
+
+
+    strengthList.innerHTML = "";
+
+
+    profileData.strengths.forEach(
+        (strength,index)=>{
+
+            const strengthBox =
+                document.createElement("div");
+
+            strengthBox.className =
+                "strength";
+
+
+            const percentage =
+                65 + (index * 7);
+
+
+            strengthBox.innerHTML = `
+
+                <div class="strength-top">
+
+                    <span>
+                        ${strength}
+                    </span>
+
+                    <span>
+                        Stark
+                    </span>
+
+                </div>
+
+                <div class="strength-bar">
+
+                    <div
+                        class="strength-fill"
+                        style="width:${Math.min(
+                            percentage,
+                            92
+                        )}%">
+                    </div>
+
+                </div>
+
+            `;
+
+
+            strengthList.appendChild(
+                strengthBox
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   ERGEBNISSE
+===================================================== */
+
+function calculateResults(){
+
+    const selected = [
+
+        ...profileData.interests,
+
+        ...profileData.strengths,
+
+        ...profileData.subjects
+
+    ];
+
+
+    const results =
+        careers.map(career=>{
+
+            let score = 0;
+
+
+            career.interests.forEach(item=>{
+
+                if(selected.includes(item)){
+                    score += 25;
+                }
+
+            });
+
+
+            career.strengths.forEach(item=>{
+
+                if(selected.includes(item)){
+                    score += 15;
+                }
+
+            });
+
+
+            career.subjects.forEach(item=>{
+
+                if(selected.includes(item)){
+                    score += 10;
+                }
+
+            });
+
+
+            score =
+                Math.min(
+                    98,
+                    Math.max(60,score)
+                );
+
+
+            return {
+                ...career,
+                match:score
+            };
+
+        });
+
+
+    results.sort(
+        (a,b)=>b.match-a.match
+    );
+
+
+    displayCareers(results);
+
+}
+
+
+/* =====================================================
+   BERUFE ANZEIGEN
+===================================================== */
+
+function displayCareers(results){
+
+    const container =
+        document.getElementById(
+            "careerList"
+        );
+
+
+    container.innerHTML = "";
+
+
+    results.forEach(career=>{
+
+        const row =
+            document.createElement("div");
+
+
+        row.className =
+            "career-row";
+
+
+        row.innerHTML = `
+
+            <div class="job-image ${career.image}">
+
+                ${createJobVisual(
+                    career.image
+                )}
+
+            </div>
+
+
+            <div class="career-content">
+
+                <h3>
+                    ${career.name}
+                </h3>
+
+                <p>
+                    ${career.categories}
+                </p>
+
+
+                <div class="match-badge">
+
+                    <span class="match-dot"></span>
+
+                    ${career.match}% Passung
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="career-arrow">
+
+                ›
+
+            </button>
+
+        `;
+
+
+        row.onclick = ()=>{
+
+            showCareerDetails(
+                career
+            );
+
+        };
+
+
+        container.appendChild(row);
+
+    });
+
+}
+
+
+/* =====================================================
+   BERUFSVISUAL
+===================================================== */
+
+function createJobVisual(type){
+
+    if(type === "laptop"){
+
+        return `
+
+            <div style="
+                width:35px;
+                height:23px;
+                background:#292d2f;
+                position:absolute;
+                left:13px;
+                top:9px;
+                border-radius:2px;
+            "></div>
+
+        `;
+
+    }
+
+
+    if(type === "office"){
+
+        return `
+
+            <div style="
+                width:39px;
+                height:22px;
+                background:#8e8c84;
+                position:absolute;
+                left:11px;
+                top:14px;
+                border-radius:2px;
+            "></div>
+
+        `;
+
+    }
+
+
+    if(type === "medical"){
+
+        return `
+
+            <div style="
+                position:absolute;
+                width:35px;
+                height:35px;
+                border-radius:50%;
+                background:#eee;
+                left:14px;
+                top:10px;
+            ">
+
+                <div style="
+                    position:absolute;
+                    width:18px;
+                    height:6px;
+                    background:#777;
+                    left:8px;
+                    top:14px;
+                "></div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    if(type === "nature"){
+
+        return `
+
+            <div style="
+                position:absolute;
+                width:22px;
+                height:38px;
+                background:#777;
+                border-radius:100% 0 100% 0;
+                left:22px;
+                top:8px;
+                transform:rotate(-20deg);
+            "></div>
+
+        `;
+
+    }
+
+
+    return `
+
+        <div style="
+            position:absolute;
+            width:38px;
+            height:38px;
+            border:2px solid #777;
+            left:12px;
+            top:9px;
+            transform:rotate(45deg);
+        "></div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   BERUF DETAILS
+===================================================== */
+
+function showCareerDetails(career){
+
+    const container =
+        document.getElementById(
+            "detailsCard"
+        );
+
+
+    container.innerHTML = `
+
+        <div class="detail-card">
+
+            <div class="detail-image">
+
+                <div class="large-laptop"></div>
+
+            </div>
+
+
+            <div class="detail-content">
+
+                <h2>
+                    ${career.name}
+                </h2>
+
+
+                <div class="tags">
+
+                    ${career.categories
+                        .split(" · ")
+                        .map(tag=>`
+                            <span class="tag">
+                                ${tag}
+                            </span>
+                        `)
+                        .join("")
+                    }
+
+                </div>
+
+
+                <div class="detail-section">
+
+                    <h3>
+                        Was macht man in diesem Beruf?
+                    </h3>
+
+                    <p>
+                        ${career.tasks}
+                    </p>
+
+                </div>
+
+
+                <div class="detail-section">
+
+                    <h3>
+                        Warum könnte das zu dir passen?
+                    </h3>
+
+                    <p>
+                        ${career.reason}
+                    </p>
+
+                </div>
+
+
+                <div class="detail-section">
+
+                    <div class="info-grid">
+
+                        <div class="info-box">
+
+                            <span>
+                                Durchschnittsgehalt
+                            </span>
+
+                            <strong>
+                                ${career.salary}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <span>
+                                Arbeitsort
+                            </span>
+
+                            <strong>
+                                ${career.workplace}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <span>
+                                Ausbildungsweg
+                            </span>
+
+                            <strong>
+                                Studium / Ausbildung
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <span>
+                                Deine Passung
+                            </span>
+
+                            <strong style="color:var(--green)">
+                                ${career.match || 80}% Match
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="detail-section">
+
+                    <h3>
+                        Ausbildung / Studium
+                    </h3>
+
+                    <p>
+                        ${career.education}
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="save-button"
+                    onclick="
+                        saveFavorite(
+                            '${career.name}'
+                        )
+                    ">
+
+                    ♡ &nbsp;
+                    Diesen Beruf merken
+
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    showScreen("details");
+
+}
+
+
+/* =====================================================
+   FAVORIT SPEICHERN
+===================================================== */
+
+function saveFavorite(name){
+
+    let favorites =
+        JSON.parse(
+            localStorage.getItem(
+                "goFutureFavorites"
+            )
+        ) || [];
+
+
+    if(!favorites.includes(name)){
+
+        favorites.push(name);
+
+
+        localStorage.setItem(
+            "goFutureFavorites",
+            JSON.stringify(favorites)
+        );
+
+
+        alert(
+            name +
+            " wurde gespeichert!"
+        );
+
+    }else{
+
+        alert(
+            name +
+            " ist bereits gespeichert."
+        );
+
+    }
+
+
+    displaySavedCareers();
+
+}
+
+
+/* =====================================================
+   GESPEICHERTE BERUFE
+===================================================== */
+
+function displaySavedCareers(){
+
+    const container =
+        document.getElementById(
+            "savedCareers"
+        );
+
+
+    if(!container){
+        return;
+    }
+
+
+    const favorites =
+        JSON.parse(
+            localStorage.getItem(
+                "goFutureFavorites"
+            )
+        ) || [];
+
+
+    container.innerHTML = "";
+
+
+    if(favorites.length === 0){
+
+        container.innerHTML = `
+
+            <div class="empty-saved">
+
+                <div class="empty-saved-icon">
+                    ♡
+                </div>
+
+                <h3>
+                    Noch keine Berufe gespeichert
+                </h3>
+
+                <p style="
+                    color:#888;
+                    font-size:11px;
+                    line-height:1.5;
+                    margin-top:8px;
+                ">
+
+                    Wenn dir ein Beruf gefällt,
+                    kannst du ihn hier speichern.
+
+                </p>
+
+
+                <button
+                    class="small-button"
+                    onclick="
+                        showScreen('careers')
+                    ">
+
+                    Berufe entdecken →
+
+                </button>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    favorites.forEach(name=>{
+
+        const career =
+            careers.find(
+                c => c.name === name
+            );
+
+
+        if(!career){
+            return;
+        }
+
+
+        const row =
+            document.createElement("div");
+
+
+        row.className =
+            "career-row";
+
+
+        row.innerHTML = `
+
+            <div class="job-image ${career.image}">
+
+                ${createJobVisual(
+                    career.image
+                )}
+
+            </div>
+
+
+            <div class="career-content">
+
+                <h3>
+                    ${career.name}
+                </h3>
+
+                <p>
+                    ${career.categories}
+                </p>
+
+
+                <div class="match-badge">
+
+                    <span class="match-dot"></span>
+
+                    Gespeichert
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="career-arrow"
+                onclick="
+                    event.stopPropagation();
+                    removeFavorite(
+                        '${career.name}'
+                    );
+                ">
+
+                ×
+
+            </button>
+
+        `;
+
+
+        row.onclick = ()=>{
+
+            showCareerDetails(
+                career
+            );
+
+        };
+
+
+        container.appendChild(row);
+
+    });
+
+}
+
+
+/* =====================================================
+   FAVORIT LÖSCHEN
+===================================================== */
+
+function removeFavorite(name){
+
+    let favorites =
+        JSON.parse(
+            localStorage.getItem(
+                "goFutureFavorites"
+            )
+        ) || [];
+
+
+    favorites =
+        favorites.filter(
+            item => item !== name
+        );
+
+
+    localStorage.setItem(
+        "goFutureFavorites",
+        JSON.stringify(favorites)
+    );
+
+
+    displaySavedCareers();
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function createNavigation(){
+
+    const pages = [
+        "home",
+        "careers",
+        "saved",
+        "plan",
+        "profile"
+    ];
+
+
+    pages.forEach(page=>{
+
+        const screen =
+            document.getElementById(page);
+
+
+        if(!screen){
+            return;
+        }
+
+
+        const nav =
+            document.createElement("nav");
+
+
+        nav.className =
+            "bottom-nav";
+
+
+        nav.innerHTML = `
+
+            <button
+                class="nav-item"
+                data-page="home"
+                onclick="
+                    showScreen('home')
+                ">
+
+                <div class="nav-icon">
+                    ⌂
+                </div>
+
+                Home
+
+            </button>
+
+
+            <button
+                class="nav-item"
+                data-page="careers"
+                onclick="
+                    showScreen('careers')
+                ">
+
+                <div class="nav-icon">
+                    ♧
+                </div>
+
+                Berufe
+
+            </button>
+
+
+            <button
+                class="nav-item"
+                data-page="saved"
+                onclick="
+                    showScreen('saved')
+                ">
+
+                <div class="nav-icon">
+                    ♡
+                </div>
+
+                Gespeichert
+
+            </button>
+
+
+            <button
+                class="nav-item"
+                data-page="plan"
+                onclick="
+                    showScreen('plan')
+                ">
+
+                <div class="nav-icon">
+                    ♢
+                </div>
+
+                Plan
+
+            </button>
+
+
+            <button
+                class="nav-item"
+                data-page="profile"
+                onclick="
+                    showScreen('profile')
+                ">
+
+                <div class="nav-icon">
+                    ○
+                </div>
+
+                Profil
+
+            </button>
+
+        `;
+
+
+        screen.appendChild(nav);
+
+    });
+
+}
+
+
+function updateNavigation(active){
+
+    document
+        .querySelectorAll(".bottom-nav")
+        .forEach(nav=>{
+
+            nav
+                .querySelectorAll(".nav-item")
+                .forEach(item=>{
+
+                    item.classList.remove(
+                        "active"
+                    );
+
+
+                    if(
+                        item.dataset.page === active
+                    ){
+
+                        item.classList.add(
+                            "active"
+                        );
+
+                    }
+
+                });
+
+        });
+
+}
+
+
+/* =====================================================
+   APP RESET
+===================================================== */
+
+function resetApp(){
+
+    const confirmReset =
+        confirm(
+            "Möchtest du Go Future wirklich komplett zurücksetzen?\n\nDein Profil, deine Antworten und gespeicherte Berufe werden gelöscht."
+        );
+
+
+    if(!confirmReset){
+        return;
+    }
+
+
+    localStorage.removeItem(
+        "goFutureProfile"
+    );
+
+
+    localStorage.removeItem(
+        "goFutureFavorites"
+    );
+
+
+    localStorage.removeItem(
+        "goFutureStarted"
+    );
+
+
+    profileData = {
+
+        name:"",
+        age:"",
+        school:"",
+        interests:[],
+        strengths:[],
+        subjects:[]
+
+    };
+
+
+    alert(
+        "Go Future wurde zurückgesetzt."
+    );
+
+
+    showScreen("landing");
+
+
+    setTimeout(()=>{
+
+        showScreen("welcome");
+
+    },800);
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+createNavigation();
+
+
+displaySavedCareers();
+
+
+/* =====================================================
+   ERSTER START ODER PROFIL LADEN
+===================================================== */
+
+const hasProfile =
+    loadProfile();
+
+
+if(hasProfile){
+
+    updateHome();
+
+    updateProfile();
+
+    calculateResults();
+
+}else{
+
+    setTimeout(()=>{
+
+        showScreen("welcome");
+
+    },1500);
+
+}
+
+</script>
+
+</body>
+</html>
